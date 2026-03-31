@@ -6,11 +6,11 @@ Este é um simples projeto acadêmico da cadeira de Projeto e Arquitetura de Sof
 
 ## 🚀 Tecnologias utilizadas
 
-* Node.js
-* TypeScript
-* Express
-* Docker + Docker Compose
-* tsx (execução em modo desenvolvimento)
+- Node.js
+- TypeScript
+- Express
+- Docker + Docker Compose
+- tsx (execução em modo desenvolvimento)
 
 ---
 
@@ -27,9 +27,9 @@ src/
 
 Antes de rodar o projeto, você precisa ter instalado:
 
-* Node.js
-* Docker
-* Docker Compose
+- Node.js
+- Docker
+- Docker Compose
 
 ---
 
@@ -56,11 +56,13 @@ PORT=3000
 
 ### 3. Rodar com Docker
 
+Importante abrir o Docker antes de executar o comando!
+
 ```bash
 docker compose up
 ```
 
----
+## Esse comando cria, configura e inicia todos os contêineres, redes e volumes definidos no arquivo docker-compose.yml
 
 ### 4. Acessar no navegador
 
@@ -87,8 +89,8 @@ npm run dev
 
 ## 📌 Observações
 
-* O projeto roda em modo desenvolvimento (hot reload)
-* Alterações no código são refletidas automaticamente
+- O projeto roda em modo desenvolvimento (hot reload)
+- Alterações no código são refletidas automaticamente
 
 ---
 
@@ -96,9 +98,9 @@ npm run dev
 
 Se algo não funcionar:
 
-* Verifique se o Docker está rodando
-* Verifique se a porta 3000 está livre
-* Verifique se o `.env` foi criado corretamente
+- Verifique se o Docker está rodando
+- Verifique se a porta 3000 está livre
+- Verifique se o `.env` foi criado corretamente
 
 ---
 
