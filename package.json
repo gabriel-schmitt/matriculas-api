@@ -1,0 +1,26 @@
+{
+  "name": "matriculas-api",
+  "version": "1.0.0",
+  "description": "Projeto da cadeira de Projeto e Arquitetura de Software implementando padrao MVC com Observer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-schmitt/matriculas-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/gabriel-schmitt/matriculas-api/issues"
+  },
+  "homepage": "https://github.com/gabriel-schmitt/matriculas-api#readme",
+  "dependencies": {
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.3.1",
+    "pg": "^8.20.0"
+  }
+}
