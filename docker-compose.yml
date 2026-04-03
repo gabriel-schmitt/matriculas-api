@@ -1,18 +1,34 @@
 services:
+  db:
+    image: postgres:17
+    container_name: cursos-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cursosdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
   app:
     env_file:
       - .env
     build:
       context: .
       dockerfile: .docker/dev/Dockerfile
-
     volumes:
       - .:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development
-
     ports:
       - "3000:3000"
-
     command: npm run dev
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

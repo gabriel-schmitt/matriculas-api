@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS cursos_matriculas (
+    id SERIAL PRIMARY KEY,
+    estado TEXT,
+    cidade TEXT,
+    ies TEXT,
+    sigla TEXT,
+    organizacao TEXT,
+    categoria_administrativa TEXT,
+    nome_do_curso TEXT,
+    nome_detalhado_do_curso TEXT,
+    modalidade TEXT,
+    grau TEXT,
+    ano_2014 INTEGER,
+    ano_2015 INTEGER,
+    ano_2016 INTEGER,
+    ano_2017 INTEGER,
+    ano_2018 INTEGER,
+    ano_2019 INTEGER,
+    ano_2020 INTEGER,
+    ano_2021 INTEGER,
+    ano_2022 INTEGER
+);
