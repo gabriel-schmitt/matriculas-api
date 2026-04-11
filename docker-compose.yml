@@ -1,18 +1,4 @@
 services:
-  db:
-    image: postgres:17
-    container_name: cursos-db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: cursosdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-
   app:
     env_file:
       - .env
@@ -29,6 +15,21 @@ services:
     command: npm run dev
     depends_on:
       - db
+
+  db:
+    image: postgres:18
+    container_name: cursos-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data/cursos_matriculas.csv:/docker-entrypoint-initdb.d/cursos_matriculas.csv
 
 volumes:
   pgdata:

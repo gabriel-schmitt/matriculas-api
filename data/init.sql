@@ -20,3 +20,8 @@ CREATE TABLE IF NOT EXISTS cursos_matriculas (
     ano_2021 INTEGER,
     ano_2022 INTEGER
 );
+
+COPY cursos_matriculas(estado, cidade, ies, sigla, organizacao, categoria_administrativa, nome_do_curso, nome_detalhado_do_curso, modalidade, grau, ano_2014, ano_2015, ano_2016, ano_2017, ano_2018, ano_2019, ano_2020, ano_2021, ano_2022)
+FROM '/docker-entrypoint-initdb.d/cursos_matriculas.csv'
+DELIMITER ';'
+CSV HEADER;
