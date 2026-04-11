@@ -1,7 +1,8 @@
-const pool = require('../config/db');
+import { pool } from '../config/db.js';
+import { ICursoMatriculaData } from '../models/CursoMatricula.js';
 
-class CursoMatriculaRepository {
-  async create(curso) {
+export class CursoMatriculaRepository {
+  async create(curso: ICursoMatriculaData) {
     const sql = `
       INSERT INTO cursos_matriculas (
         estado, cidade, ies, sigla, organizacao,
@@ -45,7 +46,7 @@ class CursoMatriculaRepository {
     return result.rows[0];
   }
 
-  async findAll(limit = 10) {
+  async findAll(limit: number = 10) {
     const result = await pool.query(
       'SELECT * FROM cursos_matriculas ORDER BY id LIMIT $1',
       [limit]
@@ -53,5 +54,3 @@ class CursoMatriculaRepository {
     return result.rows;
   }
 }
-
-module.exports = new CursoMatriculaRepository();
