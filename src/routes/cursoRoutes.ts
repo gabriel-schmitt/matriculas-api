@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { CursoMatriculaController } from "../controllers/CursoMatriculaController.js";
+import { CursoController } from "../controllers/CursoController.js";
 
 const router = Router();
-const controller = new CursoMatriculaController();
+const controller = new CursoController();
 
 router.get("/", controller.getCursos);
 
