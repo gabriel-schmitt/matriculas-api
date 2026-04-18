@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { CursoMatriculaRepository } from '../repositories/CursoMatriculaRepository.js';
+import { CursoRepository } from '../repositories/CursoRepository.js';
 
-const repository = new CursoMatriculaRepository();
+const repository = new CursoRepository();
 
-export class CursoMatriculaController {
+export class CursoController {
   async getCursos(req: Request, res: Response) {
     try {
       const limit = Number(req.query.limit) || 10;
