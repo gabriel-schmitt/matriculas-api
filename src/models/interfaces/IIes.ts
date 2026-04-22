@@ -1,6 +1,6 @@
-import { IModel } from "./IModel.js";
+import { IEntity } from "./IEntity.js";
 
-export interface IIes extends IModel {
+export interface IIes extends IEntity {
   estado: string;
   cidade: string;
   nome: string;

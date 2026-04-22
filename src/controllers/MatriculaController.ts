@@ -1,17 +1,10 @@
 import { Request, Response } from 'express';
 import { MatriculaRepository } from '../repositories/MatriculaRepository.js';
+import { Controller } from './@Controller.js';
+import { IMatricula } from '../models/interfaces/IMatricula.js';
 
-const repository = new MatriculaRepository();
-
-export class MatriculaController {
-  async getMatriculas(req: Request, res: Response) {
-    try {
-      const limit = Number(req.query.limit) || 10;
-      const data = await repository.findAll(limit);
-      res.json(data);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+export class MatriculaController extends Controller<IMatricula> {
+  constructor(repository = new MatriculaRepository()) {
+    super(repository);
   }
 }

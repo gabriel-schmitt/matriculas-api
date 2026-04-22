@@ -1,17 +1,10 @@
 import { Request, Response } from 'express';
 import { CursoRepository } from '../repositories/CursoRepository.js';
+import { Controller } from './@Controller.js';
+import { ICurso } from '../models/interfaces/ICurso.js';
 
-const repository = new CursoRepository();
-
-export class CursoController {
-  async getCursos(req: Request, res: Response) {
-    try {
-      const limit = Number(req.query.limit) || 10;
-      const cursos = await repository.findAll(limit);
-      res.json(cursos);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+export class CursoController extends Controller<ICurso> {
+  constructor(repository = new CursoRepository()) {
+    super(repository);
   }
 }

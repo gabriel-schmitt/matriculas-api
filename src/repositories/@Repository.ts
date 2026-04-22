@@ -1,8 +1,8 @@
 import { pool } from "../config/db.js";
-import { IModel } from "../models/interfaces/IModel.js";
+import { IEntity } from "../models/interfaces/IEntity.js";
 import { IRepository } from "./interfaces/IRepository.js";
 
-export abstract class Repository<T extends IModel> implements IRepository<T> {
+export abstract class Repository<T extends IEntity> implements IRepository<T> {
   constructor(private readonly tableName: string) {}
 
   async create(model: Omit<T, 'id'>): Promise<T> {
@@ -18,9 +18,9 @@ export abstract class Repository<T extends IModel> implements IRepository<T> {
     return result.rows[0];
   }
 
-  async findAll(limit: number = 10): Promise<T[]> {
+  async findAll({ limit = 10, orderBy = "id" }: { limit?: number; orderBy?: string }): Promise<T[]> {
     const result = await pool.query(
-      `SELECT * FROM ${this.tableName} ORDER BY id LIMIT $1`,
+      `SELECT * FROM ${this.tableName} ORDER BY ${orderBy} LIMIT $1`,
       [limit]
     );
     return result.rows;
