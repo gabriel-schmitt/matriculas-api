@@ -1,9 +1,13 @@
-import { IMatriculaRepository } from "../repositories/interfaces/IMatriculaRepository.js";
+import { IMatriculaRepository, IGetTotalMatriculadosParams } from "../repositories/interfaces/IMatriculaRepository.js";
 import { Model } from "./@Model.js";
-import { IMatricula } from "./interfaces/IMatricula.js";
+import { IMatricula, ITotalMatriculadosAno } from "./interfaces/IMatricula.js";
 
-export class Matricula extends Model<IMatricula, IMatriculaRepository> {
+export class MatriculaModel extends Model<IMatricula, IMatriculaRepository> {
   constructor(repository: IMatriculaRepository) {
     super(repository);
+  }
+
+  async getTotalMatriculados(params: IGetTotalMatriculadosParams): Promise<ITotalMatriculadosAno[]> {
+    return this.repository.getTotalMatriculados(params);
   }
 }

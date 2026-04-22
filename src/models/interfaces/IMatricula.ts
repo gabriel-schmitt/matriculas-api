@@ -5,3 +5,8 @@ export interface IMatricula extends IEntity {
   ano: number;
   quantidade: number;
 }
+
+export interface ITotalMatriculadosAno {
+  ano: number;
+  total_matriculas: number;
+}

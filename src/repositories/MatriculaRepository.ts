@@ -1,6 +1,6 @@
-import { IMatricula } from "../models/interfaces/IMatricula.js";
+import { IMatricula, ITotalMatriculadosAno } from "../models/interfaces/IMatricula.js";
 import { Repository } from "./@Repository.js";
-import { IMatriculaRepository } from "./interfaces/IMatriculaRepository.js";
+import { IGetTotalMatriculadosParams, IMatriculaRepository } from "./interfaces/IMatriculaRepository.js";
 import { pool } from "../config/db.js";
 
 export class MatriculaRepository extends Repository<IMatricula> implements IMatriculaRepository {
@@ -8,12 +8,14 @@ export class MatriculaRepository extends Repository<IMatricula> implements IMatr
     super("matricula");
   }
 
-  async getTotalMatriculados(ano?: number, modalidade?: string): Promise<any> {
+  async getTotalMatriculados(params: IGetTotalMatriculadosParams): Promise<ITotalMatriculadosAno[]> {
+    const { modalidade } = params;
+    
     let sql = `
       SELECT m.ano, SUM(m.quantidade) as total_matriculas
       FROM matricula m
     `;
-    const params: any[] = [];
+    const sqlParams: any[] = [];
     
     if (modalidade && modalidade !== 'Todos') {
       sql += `
@@ -23,22 +25,21 @@ export class MatriculaRepository extends Repository<IMatricula> implements IMatr
     }
 
     let whereClause = [];
-    if (ano) {
-      params.push(ano);
-      whereClause.push(`m.ano = $${params.length}`);
-    }
     if (modalidade && modalidade !== 'Todos') {
-      params.push(modalidade);
-      whereClause.push(`c.modalidade = $${params.length}`);
+      sqlParams.push(modalidade);
+      whereClause.push(`c.modalidade = $${sqlParams.length}`);
     }
 
     if (whereClause.length > 0) {
       sql += ` WHERE ` + whereClause.join(' AND ');
     }
 
-    sql += ` GROUP BY m.ano ORDER BY m.ano`;
+    sql += ` GROUP BY m.ano ORDER BY m.ano DESC`;
 
-    const result = await pool.query(sql, params);
-    return result.rows;
+    const result = await pool.query(sql, sqlParams);
+    return result.rows.map(row => ({
+      ano: row.ano,
+      total_matriculas: Number(row.total_matriculas)
+    }));
   }
 }
