@@ -1,8 +1,14 @@
 import { Router } from "express";
 import { IesController } from "../controllers/IesController.js";
+import { IesModel } from "../models/IesModel.js";
+import { IesRepository } from "../repositories/IesRepository.js";
 
 const router = Router();
-const controller = new IesController();
+const iesRepository = new IesRepository();
+const iesModel = new IesModel(iesRepository);
+const controller = new IesController(iesModel);
+
+router.get("/ranking", controller.getRanking);
 
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);

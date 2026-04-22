@@ -8,3 +8,11 @@ export interface IIes extends IEntity {
   organizacao: string;
   categoria_administrativa: string;
 }
+
+export interface IIesRanking {
+  id: number;
+  nome: string;
+  sigla: string;
+  categoria_administrativa: string;
+  total_matriculas: number;
+}
