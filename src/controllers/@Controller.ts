@@ -4,8 +4,8 @@ import { IModel } from "../models/interfaces/IModel.js";
 import { internalServerError } from "../exceptions/internalServerError.js";
 import { notFound } from "../exceptions/notFound.js";
 
-export abstract class Controller<E extends IEntity> {
-  constructor(protected model: IModel<E>) {}
+export abstract class Controller<E extends IEntity, M extends IModel<E> = IModel<E>> {
+  constructor(protected model: M) {}
 
   getAll = async (req: Request, res: Response) => {
     const params: { limit?: number; orderBy?: string } = {};
@@ -25,6 +25,10 @@ export abstract class Controller<E extends IEntity> {
 
   getById = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
+    if (isNaN(id)) {
+      res.status(400).json({ error: "ID informado inválido" });
+      return;
+    }
 
     this.model
       .findById(id)
@@ -59,6 +63,10 @@ export abstract class Controller<E extends IEntity> {
 
   update = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
+    if (isNaN(id)) {
+      res.status(400).json({ error: "ID informado inválido" });
+      return;
+    }
     const data = req.body;
 
     this.model
@@ -81,6 +89,10 @@ export abstract class Controller<E extends IEntity> {
 
   delete = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
+    if (isNaN(id)) {
+      res.status(400).json({ error: "ID informado inválido" });
+      return;
+    }
 
     this.model
       .delete(id)

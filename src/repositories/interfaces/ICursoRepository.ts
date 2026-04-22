@@ -1,4 +1,4 @@
-import { ICurso, ICursoModalidade } from "../../models/interfaces/ICurso.js";
+import { ICurso, ICursoRanking, ICursoModalidade } from "../../models/interfaces/ICurso.js";
 import { IRepository } from "./IRepository.js";
 
 export interface IGetRankingCursosParams {
@@ -8,7 +8,7 @@ export interface IGetRankingCursosParams {
 }
 
 export interface ICursoRepository extends IRepository<ICurso> {
-  getRankingCursos(params: IGetRankingCursosParams): Promise<any>;
+  getRanking(params: IGetRankingCursosParams): Promise<ICursoRanking[]>;
 }
 
 

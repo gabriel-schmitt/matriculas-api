@@ -7,4 +7,8 @@ export interface ICurso extends IEntity {
   grau: string;
 }
 
+export interface ICursoRanking extends ICurso {
+  total_matriculas: number;
+}
+
 export type ICursoModalidade = "Presencial" | "EaD";
