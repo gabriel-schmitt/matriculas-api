@@ -3,6 +3,8 @@ import { Controller } from './@Controller.js';
 import { IIes } from '../models/interfaces/IIes.js';
 import { IesModel } from '../models/IesModel.js';
 import { IGetRankingIesParams, IGetRankingIesParamsCategoriaAdministrativa } from '../repositories/interfaces/IIesRepository.js';
+import { parseModalidadeQuery } from '../utils/parseModalidadeQuery.js';
+import { firstQueryValue } from '../utils/queryString.js';
 
 export class IesController extends Controller<IIes, IesModel> {
   constructor(model: IesModel) {
@@ -11,13 +13,25 @@ export class IesController extends Controller<IIes, IesModel> {
 
   getRanking = async (req: Request, res: Response) => {
     try {
-      const { limit, modalidade, categoria_administrativa, ano } = req.query;
       const params: IGetRankingIesParams = {};
 
-      if (limit) params.limit = parseInt(limit as string);
-      if (modalidade) params.modalidade = modalidade as string;
-      if (categoria_administrativa) params.categoria_administrativa = categoria_administrativa as IGetRankingIesParamsCategoriaAdministrativa;
-      if (ano) params.ano = parseInt(ano as string);
+      const limitStr = firstQueryValue(req.query.limit);
+      if (limitStr) {
+        const n = parseInt(limitStr, 10);
+        if (!Number.isNaN(n)) params.limit = n;
+      }
+      const mod = parseModalidadeQuery(firstQueryValue(req.query.modalidade));
+      if (mod) params.modalidade = mod;
+      const catStr = firstQueryValue(req.query.categoria_administrativa);
+      if (catStr) {
+        params.categoria_administrativa =
+          catStr as IGetRankingIesParamsCategoriaAdministrativa;
+      }
+      const anoStr = firstQueryValue(req.query.ano);
+      if (anoStr) {
+        const y = parseInt(anoStr, 10);
+        if (!Number.isNaN(y)) params.ano = y;
+      }
 
       const ranking = await this.model.getRankingIes(params);
       res.json(ranking);

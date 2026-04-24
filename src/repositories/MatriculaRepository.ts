@@ -17,15 +17,18 @@ export class MatriculaRepository extends Repository<IMatricula> implements IMatr
     `;
     const sqlParams: any[] = [];
     
-    if (modalidade && modalidade !== 'Todos') {
+    const filterModalidade =
+      modalidade && String(modalidade).toLowerCase() !== "todos";
+
+    if (filterModalidade) {
       sql += `
         JOIN curso_ies ci ON m.curso_ies_id = ci.id
         JOIN curso c ON ci.curso_id = c.id
       `;
     }
 
-    let whereClause = [];
-    if (modalidade && modalidade !== 'Todos') {
+    const whereClause = [];
+    if (filterModalidade) {
       sqlParams.push(modalidade);
       whereClause.push(`c.modalidade = $${sqlParams.length}`);
     }

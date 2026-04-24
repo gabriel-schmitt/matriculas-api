@@ -9,7 +9,10 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      NODE_ENV: development
+      # Dentro do Compose o host do Postgres é o serviço `db`, porta interna 5432
+      DB_HOST: db
+      DB_PORT: "5432"
     ports:
       - "3000:3000"
     command: npm run dev
@@ -17,7 +20,9 @@ services:
       - db
 
   db:
-    image: postgres:18
+    # Use 16 para compatibilidade com volumes já existentes. Para 18+: apague o volume
+    # (`docker compose down -v`) ou faça pg_upgrade — ver imagem oficial postgres.
+    image: postgres:16
     container_name: cursos-db
     restart: always
     environment:

@@ -11,7 +11,8 @@ export function CourseRanking({ data, loading }) {
       </div>
     );
 
-  const max = Math.max(...data.map((d) => d.alunos));
+  const max =
+    data.length > 0 ? Math.max(...data.map((d) => d.alunos)) : 0;
   const medals = ["🥇", "🥈", "🥉"];
 
   return (
@@ -20,7 +21,7 @@ export function CourseRanking({ data, loading }) {
         const pct = (d.alunos / max) * 100;
         return (
           <div
-            key={d.curso}
+            key={`${i}-${d.curso}`}
             style={{
               display: "grid",
               gridTemplateColumns: "28px 1fr auto",

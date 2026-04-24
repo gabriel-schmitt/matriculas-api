@@ -15,4 +15,5 @@ export interface IIesRanking {
   sigla: string;
   categoria_administrativa: string;
   total_matriculas: number;
+  modalidade_predominante?: string | null;
 }

@@ -11,7 +11,8 @@ export function EnrollmentChart({ data, loading }) {
       </div>
     );
 
-  const max = Math.max(...data.map((d) => d.total));
+  const max =
+    data.length > 0 ? Math.max(...data.map((d) => d.total)) : 0;
   const latest = data[data.length - 1];
   const prev = data[data.length - 2];
   const growth = prev

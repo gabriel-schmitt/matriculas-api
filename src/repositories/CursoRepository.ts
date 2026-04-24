@@ -11,7 +11,7 @@ export class CursoRepository extends Repository<ICurso> implements ICursoReposit
   async getRanking(params: IGetRankingCursosParams): Promise<ICursoRanking[]> {
     const { limit = 10, modalidade, ano } = params;
 
-    const sql = `
+    let sql = `
       SELECT
         c.id,
         c.nome,
@@ -22,13 +22,28 @@ export class CursoRepository extends Repository<ICurso> implements ICursoReposit
       FROM matricula m
       JOIN curso_ies ci ON m.curso_ies_id = ci.id
       JOIN curso c ON ci.curso_id = c.id
-      ${ano ? "WHERE m.ano = $1" : ""}
-      ${modalidade ? "AND c.modalidade = $2" : ""}
+      WHERE 1=1
+    `;
+    const sqlParams: unknown[] = [];
+
+    if (ano != null && !Number.isNaN(Number(ano))) {
+      sqlParams.push(ano);
+      sql += ` AND m.ano = $${sqlParams.length}`;
+    }
+
+    if (modalidade) {
+      sqlParams.push(modalidade);
+      sql += ` AND c.modalidade = $${sqlParams.length}`;
+    }
+
+    sqlParams.push(limit);
+    sql += `
       GROUP BY c.id, c.nome, c.nome_detalhado, c.modalidade, c.grau
       ORDER BY total_matriculas DESC
-      LIMIT $3
+      LIMIT $${sqlParams.length}
     `;
-    const result = await pool.query(sql, [ano, modalidade, limit]);
+
+    const result = await pool.query(sql, sqlParams);
     return result.rows;
   }
 }

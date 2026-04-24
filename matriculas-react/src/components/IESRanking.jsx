@@ -32,7 +32,7 @@ export function IESRanking({ data, loading }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {sorted.map((d, i) => (
         <div
-          key={d.ies}
+          key={d.id != null ? `ies-${d.id}` : `ies-${i}-${d.ies}`}
           style={{
             display: "grid",
             gridTemplateColumns: "28px 1fr auto",

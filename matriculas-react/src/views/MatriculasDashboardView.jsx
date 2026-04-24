@@ -1,11 +1,11 @@
 "use client";
 
-import { Card } from "../../components/card";
-import { SectionHeader } from "../../components/sectionHeader";
-import { FilterPill } from "../../components/filterPill";
-import { EnrollmentChart } from "../../components/EnrollmentChart";
-import { CourseRanking } from "../../components/CourseRanking";
-import { IESRanking } from "../../components/IESRanking";
+import { Card } from "../components/card";
+import { SectionHeader } from "../components/sectionHeader";
+import { FilterPill } from "../components/filterPill";
+import { EnrollmentChart } from "../components/EnrollmentChart";
+import { CourseRanking } from "../components/CourseRanking";
+import { IESRanking } from "../components/IESRanking";
 import { useMatriculasDashboard } from "../hooks/useMatriculasDashboard";
 
 export function MatriculasDashboardView() {
@@ -120,7 +120,10 @@ export function MatriculasDashboardView() {
           />
         </Card>
 
-        <div className="dashboard-rankings" aria-label="Rankings de cursos e IES">
+        <div
+          className="dashboard-rankings"
+          aria-label="Rankings de cursos e IES"
+        >
           <div className="dashboard-ranking-pane">
             <Card>
               <SectionHeader title="Ranking de cursos">
@@ -139,7 +142,9 @@ export function MatriculasDashboardView() {
           <div className="dashboard-ranking-pane">
             <Card>
               <SectionHeader title="Ranking de IES">
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                >
                   <FilterPill
                     options={tipoOpts}
                     value={state.iesTipo}
@@ -166,8 +171,7 @@ export function MatriculasDashboardView() {
           marginTop: "1.5rem",
         }}
       >
-        Fonte: API quando NEXT_PUBLIC_MATRICULAS_API_URL estiver definido; caso
-        contrário, dados simulados
+        Fonte: API de matrículas do projeto (Express)
       </p>
     </div>
   );
